@@ -18,7 +18,6 @@ class MainActivityViewModel : ViewModel()
     val error = MutableLiveData<Boolean>()
     val apiService = ApiService()
 
-
     fun loadArticles()
     {
         val request = apiService.getApiInstance()
@@ -29,7 +28,6 @@ class MainActivityViewModel : ViewModel()
                 if (response.isSuccessful) {
                     error.value = false
                     articles.value = response.body()!!.articles
-
                 } else {
                     Log.i("errorcode", response.code().toString())
                     error.value = true
@@ -39,7 +37,6 @@ class MainActivityViewModel : ViewModel()
             override fun onFailure(call: Call<NewsResponse>, t: Throwable) {
                 error.value = true
             }
-
         })
     }
 

@@ -2,11 +2,13 @@ package com.exotic.kotlinassignment.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.exotic.kotlinassignment.R
 import com.exotic.kotlinassignment.model.Article
@@ -45,9 +47,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolderx> {
         holder.itemView.setOnClickListener(object : View.OnClickListener
         {
             override fun onClick(v: View?) {
-                val i = Intent(context, NewsDetailActivity::class.java)
-                i.putExtra("url", article.url)
-                context!!.startActivity(i)
+
+                val bundle = Bundle()
+                bundle.putString("url", article.url)
+                holder.itemView.findNavController().navigate(R.id.action_mainActivity_to_newsDetailActivity, bundle)
 
             }
 

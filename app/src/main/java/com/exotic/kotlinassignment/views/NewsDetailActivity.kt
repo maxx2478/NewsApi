@@ -1,29 +1,38 @@
 package com.exotic.kotlinassignment.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.fragment.app.Fragment
 import com.exotic.kotlinassignment.R
 
-class NewsDetailActivity : AppCompatActivity() {
+class NewsDetailActivity : Fragment() {
 
     var webview:WebView?=null
+    var root:View?=null
+    var url:String?=null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_news_detail)
-
-        val actionBar = supportActionBar
-        actionBar!!.title = "News Details"
-
-        initializeViews()
-        val string = intent.getStringExtra("url")
-        webview!!.loadUrl(string!!)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        root = inflater.inflate(R.layout.activity_news_detail, container, false)
+        initializeViews(root!!)
+        return root
     }
 
-    private fun initializeViews() {
-     webview = findViewById(R.id.webview)
+    override fun onStart() {
+        super.onStart()
+        webview!!.loadUrl(url!!)
+    }
+
+    private fun initializeViews(root: View) {
+        webview = root.findViewById(R.id.webview)
+        url = requireArguments().getString("url")
+
     }
 
 }
