@@ -1,7 +1,6 @@
 package com.exotic.kotlinassignment.views
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.exotic.kotlinassignment.model.Article
@@ -11,6 +10,9 @@ import com.exotic.kotlinassignment.utils.KeyConstants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivityViewModel : ViewModel()
 {
@@ -20,8 +22,12 @@ class MainActivityViewModel : ViewModel()
 
     fun loadArticles()
     {
+        val c: Date = Calendar.getInstance().getTime()
+        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formattedDate: String = df.format(c)
+
         val request = apiService.getApiInstance()
-        val call = request.getArticles(KeyConstants.MY_KEY)
+        val call = request.getArticles(formattedDate,"publishedAt" ,KeyConstants.MY_KEY)
         call.enqueue(object : Callback<NewsResponse> {
             override fun onResponse(call: Call<NewsResponse>, response: Response<NewsResponse>) {
 
